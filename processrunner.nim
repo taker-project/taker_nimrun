@@ -327,9 +327,10 @@ proc handleChild(rr) {.noreturn.} =
                      rr.parameters.stderrRedir & "\"", err)
 
   if rr.parameters.clearEnv:
-    rr.trySyscall(clearenv() == 0, "could not clear environment")
+    rr.trySyscall(c_clearenv() == 0, "could not clear environment")
   for key, value in rr.parameters.env:
-    putEnv(key, value)
+    rr.trySyscall(c_setenv(key, value, 1) == 0,
+                  "could not set environment \"" & key & "\"")
 
   var argv = allocCStringArray(rr.parameters.executable & rr.parameters.args)
   rr.trySyscall(execv(argv[0], argv) == 0,

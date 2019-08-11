@@ -85,14 +85,17 @@ proc redirectDescriptor*(fd: cint, fileName: string, flags: cint,
     return err
 
 when system.hostOS == "linux":
-  func clearenv*(): cint {.importc, header: "<stdlib.h>".}
+  proc c_clearenv*(): cint {.importc: "clearenv", header: "<stdlib.h>".}
 else:
-  func unsetenv(name: cstring): cint {.importc, header: "<stdlib.h>".}
+  proc c_unsetenv(name: cstring): cint {.importc: "unsetenv", header: "<stdlib.h>".}
   
-  func clearenv*(): cint =
+  proc c_clearenv*(): cint =
     let env = toSeq(envPairs)
     for key, _ in env:
-      result |= unsetenv(key)
+      result |= c_unsetenv(key)
+
+proc c_setenv*(key, value: cstring,
+               overwrite: cint): cint {.importc: "setenv", header: "<stdlib.h>".}
 
 const
   usecInSecond = 1_000_000;
