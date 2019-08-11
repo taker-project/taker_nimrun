@@ -44,7 +44,7 @@ type
 
   RunResults = object
     time*, clockTime*, memory*: float
-    exitCode*, signal*: int
+    exitcode*, signal*: int
     status*: RunStatus
     comment*: string
   
@@ -266,8 +266,8 @@ proc updateVerdicts(rr) =
 proc updateResultsOnTerminate(rr: var ProcessRunner,
                               resources: Rusage, status: cint) =
   if WIFEXITED(status):
-    rr.mResults.exitCode = WEXITSTATUS(status)
-    if rr.mResults.exitCode == 0:
+    rr.mResults.exitcode = WEXITSTATUS(status)
+    if rr.mResults.exitcode == 0:
       rr.mResults.status = rsOK
     else:
       rr.mResults.status = rsRuntimeError
@@ -360,7 +360,7 @@ proc handleParent(rr) =
     return
 
   # initialize results
-  rr.mResults = RunResults(exitCode: 0, signal: 0, time: 0.0, clockTime: 0.0,
+  rr.mResults = RunResults(exitcode: 0, signal: 0, time: 0.0, clockTime: 0.0,
                            memory: 0.0, status: rsRunning)
 
   # wait for process
