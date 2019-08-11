@@ -350,7 +350,7 @@ proc handleParent(rr) =
       rr.parentFailure("unexpected child/parent protocol error")
     var message = newString(msgSize)
     let bytesExpected = sizeof(char) * msgSize
-    rr.trySyscall(read(rr.pipe[0], addr message, bytesExpected) == bytesExpected,
+    rr.trySyscall(read(rr.pipe[0], addr message[0], bytesExpected) == bytesExpected,
                   "unexpected child/parent protocol error (message length" &
                   " must be " & $bytesExpected & ", not " & $bytesRead & ")")
     rr.mResults.status = rsRunFail
