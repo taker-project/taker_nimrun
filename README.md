@@ -4,7 +4,7 @@ This is a rewrite of the [Taker's](https://github.com/taker-project/taker_v0) de
 
 ## Supported platforms
 
-Like `taker_unixrun`, it should work on GNU/Linux, macOS and FreeBSD, but now it was tested only on GNU/Linux. Maybe I'll test it on other systems later. It can also run on other UNIXes, but some patching may be required.
+Like `taker_unixrun`, it should work on GNU/Linux, macOS and FreeBSD, but now it was tested only on GNU/Linux and FreeBSD. Maybe I'll test it on other systems later. It can also run on other UNIXes, but some patching may be required.
 
 ## Building
 

@@ -8,7 +8,7 @@ type
   FileRight* = enum
     frRead, frWrite, frExecute
 
-const
+let
   readPerm = S_IRUSR or S_IRGRP or S_IROTH
   writePerm = S_IWUSR or S_IWGRP or S_IWOTH
   execPerm = S_IXUSR or S_IXGRP or S_IXOTH
@@ -91,8 +91,8 @@ else:
   
   proc c_clearenv*(): cint =
     let env = toSeq(envPairs)
-    for key, _ in env:
-      result |= c_unsetenv(key)
+    for item in env:
+      result = result or c_unsetenv(item[0])
 
 proc c_setenv*(key, value: cstring,
                overwrite: cint): cint {.importc: "setenv", header: "<stdlib.h>".}
